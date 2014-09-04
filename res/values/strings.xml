@@ -7,5 +7,6 @@
     <string name="add_hint">Add a new Item</string>
     <string name="toast_hint_enter_item_to_add_in_list">Please enter item to add in List</string>
     <string name="toast_hint_empty_list">List is empty !!</string>
+    <string name="toast_hint_item_already_exist">Item already exist </string>
 
 </resources>

@@ -45,8 +45,7 @@ public class TodoActivity extends Activity {
     			
     			if (todoItems.size() == 0)
     			{
-    				// Not able to access R.id.toast_hint_empty_list
-    				Toast.makeText(getBaseContext(), "List is empty", -2).show();
+    				Toast.makeText(getBaseContext(), R.string.toast_hint_empty_list, -2).show();
     			}
     			return true;
 			}
@@ -64,16 +63,23 @@ public class TodoActivity extends Activity {
 	public void addTodoItem(View v) {
 		// TODO Auto-generated method stub
 		EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
-		if (etNewItem.getText().toString().trim().compareTo("") != 0)
+		String etNewtItemString = etNewItem.getText().toString().trim();
+		/* Validation : Blank Item Name */
+		if (etNewtItemString.compareTo("") == 0)
 		{
-			todoAdapter.add(etNewItem.getText().toString());
+			Toast.makeText(this, R.string.toast_hint_enter_item_to_add_in_list, -5).show(); //Toast.LENGTH_SHORT
+		}
+		/* Validation : Item Already Exist */
+		else if (isItemExistInList(etNewtItemString) == true)
+		{
+			Toast.makeText(this, R.string.toast_hint_item_already_exist, -5).show(); //Toast.LENGTH_SHORT
 			etNewItem.setText("");
-			writeItems();
 		}
 		else
 		{
-			// Not able to access R.id.toast_hint_enter_item_to_add_in_list
-			Toast.makeText(this, "Please enter item to add in List", -5).show(); //Toast.LENGTH_SHORT
+			todoAdapter.add(etNewtItemString);
+			etNewItem.setText("");
+			writeItems();
 		}
 	}
 	
@@ -100,4 +106,11 @@ public class TodoActivity extends Activity {
 		}
 	}
 	
+	private boolean isItemExistInList (String itemString)
+	{
+		int posItem = todoItems.indexOf(itemString);
+		if (posItem == -1)
+			return false; // Item does not exist in List
+		return true; // Item already exist in List 
+	}
 }
